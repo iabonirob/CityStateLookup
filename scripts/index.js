@@ -21,43 +21,43 @@ let cityStates = [{
     state: "Texas",
     stateAbbr: "TX",
     image: 'https://tpwd.texas.gov/backgrounds/images/cowgirl_bg.jpg',
-    cities: [{ name: "Aspen", image: "xxx", hotels: ["Marriot", "Hilton", "Ritz"] },
-    { name: "Boulder", image: "xxx", hotels: ["Marriot", "Hilton", "Ritz", "W"] },
-    { name: "Denver", image: "xxx", hotels: ["Marriot", "Hilton", "Ritz", "Best Western"] },
-    { name: "Pagosa Springs", image: "xxx", hotels: ["Marriot", "Hilton", "Ritz", "Best Western"] }]
+    cities: [{ name: "Austin", image: "xxx", hotels: ["Marriot", "Hilton", "Ritz"] },
+    { name: "Dallas", image: "xxx", hotels: ["Marriot", "Hilton", "Ritz", "W"] },
+    { name: "Houston", image: "xxx", hotels: ["Marriot", "Hilton", "Ritz", "Best Western"] },
+    { name: "San Antonio", image: "xxx", hotels: ["Marriot", "Hilton", "Ritz", "Best Western"] }]
 },
 ];
 
 window.onload = function () {
     // This function loads the state dropdown menu, called when the page loads
     loadStatesDropdown();
-    // this functions connect the onchange event handler for the states dropdown
+    // this functions connects the onchange event handler for the states dropdown
     const statesDropdown = document.getElementById("statesDropdown");
     statesDropdown.onchange = onStatesDropdownChanged;
-
+    // this functions connects the onchange event handler for the cities dropdown   
     const citiesDropdown = document.getElementById("citiesDropdown");
     citiesDropdown.onchange = onCitiesDropdownChanged;
 
-    // // this functions connects the onchange event handler for the cities dropdown
-    // const hotelsDropdown = document.getElementById("hotelsDropdown");
-    // hotelsDropdown.onchange = onhotelsDropdownChanged;
+    // this functions connects the onchange event handler for the hotels dropdown
+    const hotelsDropdown = document.getElementById("hotelsDropdown");
+    hotelsDropdown.onchange = onhotelsDropdownChanged;
 
 }
 
 // this is the function that loads the states dropdown
 function loadStatesDropdown() {
 
-    //create the default option
+    //We are creating the default "Select one function"
     let select1OneOption = new Option("Select one...", "");
     statesDropdown.appendChild(select1OneOption);
     
 
-    //this loop populates the states
+    //this loop populates the state dropdown menu
     for (let i = 0; i < cityStates.length; i++) {
         let theOption = new Option(cityStates[i].state, cityStates[i].stateAbbr);
         statesDropdown.appendChild(theOption);
     }
-    //this function populates the select the state first in the cities dropdown before the 
+    //this function populates the select "the state first" in the cities dropdown before the 
     addSelectStateFirstOptionToCityDropdown()
     const hotelsDropdown = document.getElementById("hotelsDropdown");
     let select2OneOption = new Option("Select the City and State first...", "");
@@ -67,25 +67,25 @@ function loadStatesDropdown() {
 
 
 function onStatesDropdownChanged() {
-    // find the league and team dropdown
+    // finding all the dropdowns
     const statesDropdown = document.getElementById("statesDropdown");
     const citiesDropdown = document.getElementById("citiesDropdown");
     const hotelsDropdown = document.getElementById("hotelsDropdown");
 
 
-    //remove the previous teams from the team drop down
+    //removing previous selections from the cities and hotels dropdown
     citiesDropdown.options.length = 0;
     hotelsDropdown.options.length = 0;
-    // find the league dropdown selection value
+    // finding the states dropdown value
     let selectedStatesAbbr = statesDropdown.value;
 
-    //find the message paragraph
+    //find the paragraph where the message is to be displayed
     const messagePara = document.getElementById("messagePara");
-    //erase previous team message
+    //we are erasing the previous message here
     messagePara.innerHTML = "";
 
 
-    //check if they picked select one/call function
+    //checking if they picked the default selection
     if (selectedStatesAbbr == "") {
         addSelectStateFirstOptionToCityDropdown();
         const hotelsDropdown = document.getElementById("hotelsDropdown");
@@ -94,11 +94,11 @@ function onStatesDropdownChanged() {
         return;
     }
 
-    //go use the selected leagueCode to find the matching league from the array
+    //finding the matching states from the cityStates Array
     let matchingState = cityStates.find(arrayElement => arrayElement.stateAbbr == selectedStatesAbbr);
     //change the background when the state changes
     document.body.style.backgroundImage = "url(" + matchingState.image + ")";
-    //create the select1one option
+    //create the default select1one options 
     let select1OneOption = new Option("Select one...", "");
     citiesDropdown.appendChild(select1OneOption);
     let select2OneOption = new Option("Select the City first...", "");
@@ -111,7 +111,7 @@ function onStatesDropdownChanged() {
 
 }
 
-//function that 
+//function that controls what happens when the cities dropdown changes.
 function onCitiesDropdownChanged() {
     // find the league and team dropdown
     const statesDropdown = document.getElementById("statesDropdown");
@@ -175,14 +175,9 @@ function onhotelsDropdownChanged() {
     
 
     let message = "City: " + selectedCity + "<br>" +
-        "State: " + selectedState + "<br>" + selectedHotel
+        "State: " + selectedState + "<br>" + "Hotel: " + selectedHotel
     messagePara.innerHTML = message;
 }
-
-
-
-
-
 
 
 function addSelectStateFirstOptionToCityDropdown() {
@@ -192,4 +187,5 @@ function addSelectStateFirstOptionToCityDropdown() {
     citiesDropdown.appendChild(select1OneOption);
 
 }
+
 
